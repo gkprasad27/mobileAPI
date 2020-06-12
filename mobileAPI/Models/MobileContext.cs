@@ -981,6 +981,10 @@ namespace mobileAPI.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.ContactNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.ContactPerson)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -992,6 +996,10 @@ namespace mobileAPI.Models
 
                 entity.Property(e => e.Locatation)
                     .HasColumnName("locatation")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PotentialLead)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Product)

@@ -5,7 +5,7 @@ namespace mobileAPI.Models
 {
     public partial class Visit
     {
-        public int? VisitId { get; set; }
+        public int VisitId { get; set; }
         public string ClientName { get; set; }
         public string Locatation { get; set; }
         public string ContactPerson { get; set; }
@@ -16,5 +16,7 @@ namespace mobileAPI.Models
         public string VisitedEmployee { get; set; }
         public DateTime? AddDate { get; set; }
         public string VisitType { get; set; }
+        public string PotentialLead { get; set; }
+        public string ContactNumber { get; set; }
     }
 }
