@@ -234,13 +234,14 @@ namespace mobileAPI.BussinessLogic
         {
             try
             {
+                int _code = 0;
                 errorMessage = string.Empty;
 
                 using (MobileContext context=new MobileContext())
                 {
-                    var _code = context.Companies.Max(x => x.CompanyCode)?? "0";
+                    _code =context.Companies.Max(x => Convert.ToInt32(x.CompanyCode));
 
-                    companies.CompanyCode = (Convert.ToInt32(_code) + 1).ToString();
+                    companies.CompanyCode = (_code + 1).ToString();
                     companies.Active = "Y";
                     companies.AddDate = DateTime.Now;
 
