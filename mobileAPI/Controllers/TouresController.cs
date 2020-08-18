@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using mobileAPI.BussinessLogic;
 using mobileAPI.Config;
@@ -22,11 +23,14 @@ namespace mobileAPI.Controllers
     {
         IWebHostEnvironment _webHostEnvironment = null;
         private readonly IOptions<ApplicationConfig> applicationConfig;
-        
-        public TouresController(IWebHostEnvironment environment, IOptions<ApplicationConfig> appConfig)
+        IConfiguration iConfig = null;
+
+
+        public TouresController(IWebHostEnvironment environment, IOptions<ApplicationConfig> appConfig, IConfiguration iConfig)
         {
             _webHostEnvironment = environment;
             applicationConfig = appConfig;
+            this.iConfig = iConfig;
         }
         [HttpGet("GetVisitTypes")]
         public async Task<IActionResult> GetVisitTypes()
@@ -238,6 +242,7 @@ namespace mobileAPI.Controllers
                 var result = new TouresHelper().InsertVisit(empCode, visit, visitType);
                 if (result != null)
                 {
+                    CommanHelper.SendMail(iConfig);
                     return Ok(new APIResponse() { STATUS = APISTATUS.PASS.ToString(), Response = result });
                 }
 
@@ -322,7 +327,7 @@ namespace mobileAPI.Controllers
         {
             try
             {
-                var _clientList = new TouresHelper().GetClientsList();
+               var _clientList = new TouresHelper().GetClientsList();
                 if (_clientList.Count > 0)
                 {
                     dynamic expando = new ExpandoObject();
