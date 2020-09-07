@@ -24,8 +24,6 @@ namespace mobileAPI.Controllers
         IWebHostEnvironment _webHostEnvironment = null;
         private readonly IOptions<ApplicationConfig> applicationConfig;
         IConfiguration iConfig = null;
-
-
         public TouresController(IWebHostEnvironment environment, IOptions<ApplicationConfig> appConfig, IConfiguration iConfig)
         {
             _webHostEnvironment = environment;
@@ -242,7 +240,7 @@ namespace mobileAPI.Controllers
                 var result = new TouresHelper().InsertVisit(empCode, visit, visitType);
                 if (result != null)
                 {
-                    CommanHelper.SendMail(iConfig);
+                    try { CommanHelper.SendMail(iConfig, visit); } catch { }
                     return Ok(new APIResponse() { STATUS = APISTATUS.PASS.ToString(), Response = result });
                 }
 
